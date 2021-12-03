@@ -1,6 +1,7 @@
 package com.bambi.tutorial.config;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -18,5 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests() // HttpServletRequest를 사용하는 요청들에 대한 접근 제한을 설정하겠습니다
         .antMatchers("/api/hello").permitAll() ///api/hello에 대한 요청은 인증없이 접근을 허용할게요
         .anyRequest().authenticated(); //나머지 요청은 모두 인증이 필요해요
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring()
+        .antMatchers("/h2-console/**", "/favicon.ico");
   }
 }
